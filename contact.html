@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+  <title>عالم جبّور</title>
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+  <link href="css/style.css" rel="stylesheet" />
+  <link href="css/responsive.css" rel="stylesheet" />
+
+  <style>
+    /* ===== Page Layout (Sticky footer) ===== */
+    html, body { height: 100%; }
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .page-content { flex: 1 0 auto; }
+    .footer_section { margin-top: auto; width: 100%; }
+
+    /* ===== Reduce top space (sub page header area) ===== */
+    .top_container.sub_pages {
+      height: 12vh;
+      min-height: 100px;
+    }
+    .custom_nav-container { padding: 6px 0; }
+    .header_section { padding-top: 0; }
+
+    /* ===== Posters Section spacing ===== */
+    .posters_grid {
+      margin-top: 24px;
+      row-gap: 28px;
+    }
+
+    /* ===== Card: make all equal height ===== */
+    .simple-card {
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+      padding: 14px;
+      transition: 0.25s ease;
+      cursor: pointer;
+
+      /* key for equal height */
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    .simple-card:hover { transform: translateY(-4px); }
+
+    /* ===== Poster image container (same height for all) ===== */
+    .poster-media {
+      width: 100%;
+      /* خلي الشكل مناسب للبوستر (عمودي) */
+      aspect-ratio: 3 / 4;       /* تقدري تغيريه 4/5 لو تبينه أطول */
+      border-radius: 12px;
+      background: #f7f7f7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* image fits inside container without cropping */
+    .poster-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    /* ===== Card text area ===== */
+    .card-body-custom {
+      margin-top: 14px;
+      text-align: center;
+      direction: rtl;
+
+      /* push text area to be consistent */
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex: 1;                   /* يجعل كل كروت نفس الطول حتى لو النص مختلف */
+    }
+
+    .card-body-custom h4 {
+      margin: 0;
+      font-size: 22px;
+      font-weight: 800;
+      color: #2d2c2c;
+      line-height: 1.4;
+    }
+
+    .card-body-custom p {
+      margin: 0;
+      color: #555;
+      font-size: 15px;
+      line-height: 1.9;
+    }
+
+    /* (اختياري) قللي طول وصف البوستر داخل الكارد حتى لا يطوّل كارد معيّن */
+    .card-body-custom p.clamp {
+      display: -webkit-box;
+      -webkit-line-clamp: 6;     /* عدد السطور */
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* ===== Lightbox ===== */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      padding: 24px;
+    }
+    .lightbox img {
+      max-width: 92%;
+      max-height: 92%;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .lightbox span {
+      position: absolute;
+      top: 18px;
+      right: 22px;
+      font-size: 44px;
+      color: #fff;
+      cursor: pointer;
+      line-height: 1;
+    }
+    /* تثبيت اتجاه النافبار مثل السابق */
+    .custom_nav-container {
+      direction: ltr;              /* مهم */
+    }
+
+    /* اللوغو دائماً يسار */
+    .navbar-brand {
+      margin-right: auto;
+      margin-left: 0;
+    }
+
+    /* القائمة دائماً يمين */
+    .navbar-nav {
+      margin-left: auto !important;
+      margin-right: 0 !important;
+    }
+
+    /* إعادة اتجاه النص داخل القائمة للعربي */
+    .navbar-nav .nav-link {
+      direction: rtl;
+      text-align: right;
+    }
+
+
+    /* ===== Responsive tweaks ===== */
+    @media (max-width: 768px) {
+      .poster-media { aspect-ratio: 3 / 4; }
+      .card-body-custom h4 { font-size: 20px; }
+      .card-body-custom p { font-size: 14px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="page-content">
+
+    <!-- Header -->
+    <div class="top_container sub_pages">
+      <header class="header_section">
+        <div class="container">
+          <nav class="navbar navbar-expand-lg custom_nav-container">
+            <a class="navbar-brand" href="index.html">
+              <img src="images/jaboor.png" alt="">
+              <span style="color:#092465;font-weight:800;">عالَم جبّور</span>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <div class="d-flex ml-auto flex-column flex-lg-row align-items-center">
+                <ul class="navbar-nav">
+                  <li class="nav-item active">
+                    <a class="nav-link" href="index.html">الصفحة الرئيسية</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="about.html">المغامرات</a>
+                  </li>
+                  <!-- <li class="nav-item">
+                    <a class="nav-link" href="vehicle.html">الألعاب</a>
+                  </li> -->
+                  <li class="nav-item">
+                    <a class="nav-link" href="contact.html">دليل السلامة</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+          </nav>
+        </div>
+      </header>
+    </div>
+
+    <!-- Posters Section -->
+    <section class="contact_section layout_padding">
+      <div class="container">
+
+        <h1 class="main-heading text-center">  السلامة مع جبّــــــــــور</h1><br>
+
+        <p class="text-center" style="max-width: 980px; margin: 0 auto;">
+          مرحباً بك في عالم جبّور، حيث يبدأ التعلّم دائماً بخطوة آمنة 🌟
+          جبّور صديقك الذكي في المختبر، يرافقك خطوة بخطوة ليعلّمك كيف تتعاملين مع الأدوات والمواد بطريقة صحيحة وآمنة.
+          مع جبّور ستتعلمين كيف تحمين نفسك وزميلاتك من الأخطاء، ولماذا يُعد ارتداء أدوات السلامة أمراً مهماً،
+          وكيف نتصرف بهدوء في حال حدوث أي خطأ بسيط. هدفنا أن نجعل المختبر مكاناً مليئاً بالاكتشاف والمرح،
+          حيث تتحول القواعد إلى عادات جميلة، ويصبح العلم تجربة ممتعة وآمنة في الوقت نفسه.
+        </p><br>
+
+        <p class="text-center" style="max-width: 980px; margin: 0 auto;">
+          لأن السلامة معرفةٌ مستمرة، أعددنا لك كتيّب السلامة مع جبّور ليكون دليلك الشامل داخل المختبر.
+          يحتوي الكتيّب على شرح مفصّل لقواعد السلامة، وطريقة التعامل مع الأدوات والمواد،
+          ونصائح مهمة تساعدك على التصرّف الصحيح في مختلف المواقف.
+          للاطلاع على التفاصيل كاملة، يمكنك فتح الكتيّب بالضغط على الزر أدناه.
+        </p><br><br>
+
+        <!-- زر فتح الكتيّب -->
+        <center><a href="https://heyzine.com/flip-book/31077e3e68.html#page/12" target="_blank" class="booklet-btn">
+          📖 فتح كتيّب السلامة
+        </a></center><hr>
+        <br><br><br>
+        <h2 class="main-heading text-center">البوستــــــرات</h2>
+        <div class="row posters_grid">
+          
+          <!-- Poster 1 -->
+          <div class="col-lg-6 col-md-6 col-sm-12 mb-4">
+            <div class="simple-card poster-link" data-img="images/post1.jpeg">
+              <div class="poster-media">
+                <img src="images/post1.jpeg" alt="Poster 1">
+              </div>
+
+              <div class="card-body-custom">
+                <h4>قواعد السلامة في المختبر</h4>
+                <p class="clamp">
+                  السلامة في المختبر هي الخطوة الأولى نحو تعلّم ممتع وآمن.
+                  في هذا البوستر نتعرّف على أهم القواعد التي تساعدنا على استخدام الأدوات والمواد بشكل صحيح،
+                  ونتعلم كيف نحافظ على سلامتنا وسلامة زميلاتنا أثناء التجارب العلمية،
+                  لنجعل المختبر مكاناً مليئاً بالاكتشاف والمعرفة بدون مخاطر.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Poster 2 -->
+          <div class="col-lg-6 col-md-6 col-sm-12 mb-4">
+            <div class="simple-card poster-link" data-img="images/post2.jpeg">
+              <div class="poster-media">
+                <img src="images/post2.jpeg" alt="Poster 2">
+              </div>
+
+              <div class="card-body-custom">
+                <h4>استبدل تصرفاتك الخاطئة إلى صحيحة مع جبّور</h4>
+                <p class="clamp">
+                  جبّور يعلّمنا أن السلامة تبدأ بالتصرف الصحيح داخل المختبر.
+                  ارتداء معدات الحماية يحمينا من المخاطر ويجعل التجارب آمنة.
+                  الانتباه لتعليمات المعلم يساعدنا على التعلّم بدون أخطاء.
+                  ومع الالتزام بالقوانين، يصبح المختبر مكاناً ممتعاً وآمناً للجميع.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Poster 3 -->
+          <div class="col-lg-6 col-md-6 col-sm-12 mb-4">
+            <div class="simple-card poster-link" data-img="images/post3.jpeg">
+              <div class="poster-media">
+                <img src="images/post3.jpeg" alt="Poster 3">
+              </div>
+
+              <div class="card-body-custom">
+                <h4>صور من تجارب جبّور في المختبر</h4>
+                <p class="clamp"> 
+
+                                    يأخذنا جبّور في رحلة ممتعة داخل مختبره الصغير، حيث تتحول التجارب العلمية إلى لحظات من الاكتشاف والدهشة.
+                  من خلط الألوان إلى ملاحظة التفاعلات، يتعلّم جبّور كيف يطرح الأسئلة ويبحث عن الإجابات بأسلوب آمن وممتع.
+                  هذه الصور تعكس حب الاستكشاف والفضول العلمي، وتُظهر كيف يمكن للعلم أن يكون تجربة شيّقة مليئة بالإبداع.
+                  مع جبّور، يصبح المختبر مكاناً للتعلّم، والمرح، وبناء المعرفة خطوة بخطوة
+
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Poster 4 -->
+          <div class="col-lg-6 col-md-6 col-sm-12 mb-4">
+            <div class="simple-card poster-link" data-img="images/post4.jpeg">
+              <div class="poster-media">
+                <img src="images/post4.jpeg" alt="Poster 4">
+              </div>
+
+              <div class="card-body-custom">
+                <h4>قواعد السلامة في مختبر الكيمياء</h4>
+                <p class="clamp"> 
+                  الالتزام بقواعد السلامة داخل مختبر الكيمياء هو أساس التعلّم الآمن والناجح.
+                  تساعدنا هذه الإرشادات على حماية أنفسنا وزميلاتنا أثناء إجراء التجارب، وتعلّمنا كيف نتعامل مع الأدوات والمواد الكيميائية بحذر ومسؤولية.
+                  من ارتداء الملابس الواقية، واتباع تعليمات المعلم، إلى الحفاظ على النظافة والنظام، كلها خطوات بسيطة تصنع فرقاً كبيراً.
+                  عندما نلتزم بقواعد السلامة، يصبح المختبر مكاناً آمناً، منظماً، ومليئاً بالاكتشاف والمعرفة.
+
+
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Footer -->
+  <section class="container-fluid footer_section">
+    <p style="margin:0; text-align:center;">© 2019 All Rights Reserved</p>
+  </section>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <span id="closeLightbox">&times;</span>
+    <img id="lightboxImg" src="" alt="">
+  </div>
+
+  <!-- JS (Lightbox) -->
+  <script>
+    const posters = document.querySelectorAll('.poster-link');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const closeBtn = document.getElementById('closeLightbox');
+
+    posters.forEach(poster => {
+      poster.addEventListener('click', () => {
+        lightboxImg.src = poster.dataset.img;
+        lightbox.style.display = 'flex';
+      });
+    });
+
+    closeBtn.onclick = () => lightbox.style.display = 'none';
+    lightbox.onclick = e => {
+      if (e.target === lightbox) lightbox.style.display = 'none';
+    };
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- Basic -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <!-- Site Metas -->
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+
+  <title> عالَم جبّور</title>
+
+
+
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+  <!-- progress barstle -->
+  <link rel="stylesheet" href="css/css-circular-prog-bar.css">
+  <!-- fonts style -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
+  <!-- font wesome stylesheet -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <!-- Custom styles for this template -->
+  <link href="css/style.css" rel="stylesheet" />
+  <!-- responsive style -->
+  <link href="css/responsive.css" rel="stylesheet" />
+
+
+
+
+  <link rel="stylesheet" href="css/css-circular-prog-bar.css">
+
+<style>
+    .video-container {
+      width: 100%;
+      padding: 40px 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .video-container video {
+      width: 65%;
+      max-width: 900px;
+      border-radius: 16px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+      background: #000;
+    }
+
+    @media (max-width: 768px) {
+      .video-container video {
+        width: 95%;
+      }
+    }
+
+    /* ===== Sound Button ===== */
+    .sound-btn {
+      margin-top: 16px;
+      padding: 12px 22px;
+      border: none;
+      border-radius: 999px;
+      background: #fec913;
+      color: #092465;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .sound-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    /* ===== Footer ===== */
+    .footer_section {
+      margin-top: auto;
+      width: 100%;
+      background: #092465;
+      color: #fff;
+      text-align: center;
+      padding: 12px 0;
+      font-size: 14px;
+    }
+</style>
+</head>
+
+<body>
+  <div class=" sub_pages">
+    <!-- header section strats -->
+    <header class="header_section">
+      <div class="container">
+        <nav class="navbar navbar-expand-lg custom_nav-container ">
+          <a class="navbar-brand" href="index.html">
+            <img src="images/jaboor.png" alt="">
+            <span style="color:#092465;font-weight:800;">
+             عالَم جبّور
+            </span>
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="d-flex ml-auto flex-column flex-lg-row align-items-center">
+              <ul class="navbar-nav  ">
+                <li class="nav-item active">
+                  <a class="nav-link" href="index.html"> الصفحة الرئيسية <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item ">
+                  <a class="nav-link" href="about.html"> المغامرات </a>
+                </li>
+
+                <!-- <li class="nav-item ">
+                  <a class="nav-link" href="teacher.html"> Teacher </a>
+                </li> -->
+
+                <!-- <li class="nav-item">
+                  <a class="nav-link" href="vehicle.html"> الألعاب </a>
+                </li> -->
+
+                <li class="nav-item">
+                  <a class="nav-link" href="contact.html"> دليل السلامة</a>
+                </li>
+
+              </ul>
+              <!-- <form class="form-inline my-2 my-lg-0 ml-0 ml-lg-4 mb-3 mb-lg-0">
+                <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit"></button>
+              </form> -->
+            </div>
+        </nav>
+      </div>
+    </header>
+  </div>
+  <!-- end header section -->
+
+  <!-- ===== Page Content ===== -->
+  <div class="page-content">
+
+    <!-- Header -->
+
+
+    <!-- Video Section -->
+    <section class="video-container">
+      <video id="vid" autoplay muted loop playsinline controls>
+        <source src="images/vid1.mp4" type="video/mp4">
+        المتصفح لا يدعم تشغيل الفيديو
+      </video>
+
+      <button class="sound-btn" id="soundBtn">🔊 تشغيل الصوت</button>
+    </section>
+
+  </div>
+
+  <!-- Footer -->
+  <section class="footer_section">
+    © 2025 عالم جبّور – جميع الحقوق محفوظة
+  </section>
+
+  <!-- JavaScript -->
+  <script>
+    const vid = document.getElementById("vid");
+    const btn = document.getElementById("soundBtn");
+
+    btn.addEventListener("click", async () => {
+      vid.muted = false;
+      vid.volume = 1.0;
+
+      try {
+        await vid.play();
+        btn.textContent = "🔇 كتم الصوت";
+      } catch (e) {
+        console.log("Autoplay with sound blocked:", e);
+      }
+
+      btn.onclick = () => {
+        if (vid.muted) {
+          vid.muted = false;
+          btn.textContent = "🔇 كتم الصوت";
+        } else {
+          vid.muted = true;
+          btn.textContent = "🔊 تشغيل الصوت";
+        }
+      };
+    });
+  </script>
+
+</body>
+
+</html>
